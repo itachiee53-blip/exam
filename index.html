@@ -294,12 +294,11 @@ textarea.inp{resize:vertical;min-height:96px;line-height:1.6}
 .opt-exp-box {
   display: none;
   margin-top: 8px;
-  padding: 12px 16px;
-  padding-left: 48px;
-  text-align: left;
+  padding: 14px 16px !important;
+  text-align: left !important;
   border-radius: 14px;
-  font-size: 13px;
-  line-height: 1.6;
+  font-size: 13.5px;
+  line-height: 1.65;
   white-space: pre-wrap;
   background: var(--surface);
   border: 1px solid var(--line);
@@ -3040,8 +3039,8 @@ function paintQ(){
             <button type="button" class="btn-why-round" data-toggleexp="${oi}" title="ดูเหตุผล">
               <i data-lucide="help-circle"></i>
             </button>
-                        <div class="opt-exp-box" id="exp_box_${oi}">
-              <b style="color:#ef5350">เหตุผล :</b> ${esc(q.cExps[oi])}
+                                    <div class="opt-exp-box" id="exp_box_${oi}" style="text-align:left!important">
+              <span style="color:#ef5350;font-weight:600">เหตุผล : </span><span style="color:var(--text)">${esc(q.cExps[oi])}</span>
             </div>` : ''}
         </div>`;
       }).join('')}
