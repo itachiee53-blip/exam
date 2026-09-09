@@ -3039,8 +3039,8 @@ function paintQ(){
             <button type="button" class="btn-why-round" data-toggleexp="${oi}" title="ดูเหตุผล">
               <i data-lucide="help-circle"></i>
             </button>
-                                    <div class="opt-exp-box" id="exp_box_${oi}" style="text-align:left!important">
-              <span style="color:#ef5350;font-weight:600">เหตุผล : </span><span style="color:var(--text)">${esc(q.cExps[oi])}</span>
+                        <div class="opt-exp-box" id="exp_box_${oi}" style="display:block;text-align:left!important;white-space:normal!important">
+              <span style="color:#ef5350;font-weight:600">เหตุผล : </span><span style="color:var(--text)">${esc((q.cExps[oi]||'').trim())}</span>
             </div>` : ''}
         </div>`;
       }).join('')}
