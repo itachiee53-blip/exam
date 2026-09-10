@@ -2806,6 +2806,7 @@ function renderCards(){
 }
 
 function cForm(card){
+function cForm(card){
   const d=card||{f:'',b:'',fImg:'',bImg:'',fPos:'bottom',bPos:'bottom',cat:CFF.cat!=='ทั้งหมด'?CFF.cat:S.cats[0],box:3};
   let selectedCat = d.cat;
   let curFImg = d.fImg || '';
@@ -2820,7 +2821,6 @@ function cForm(card){
       fBox.innerHTML = curFImg ? `
         <div class="img-preview-box">
           <img src="${curFImg}" class="img-thumb" style="width:70px;height:70px" onclick="openLightboxGallery(['${curFImg}'], 0)">
-          <span class="tag" style="font-size:11px">${curFPos==='top'?'ข้อความบน':'ข้อความล่าง'}</span>
           <button type="button" class="del-btn" id="delFImg">×</button>
         </div>` : '';
       if($('#delFImg')) $('#delFImg').onclick = () => { curFImg = ''; paintCardImgPreviews(); };
@@ -2829,7 +2829,6 @@ function cForm(card){
       bBox.innerHTML = curBImg ? `
         <div class="img-preview-box">
           <img src="${curBImg}" class="img-thumb" style="width:70px;height:70px" onclick="openLightboxGallery(['${curBImg}'], 0)">
-          <span class="tag" style="font-size:11px">${curBPos==='top'?'ข้อความบน':'ข้อความล่าง'}</span>
           <button type="button" class="del-btn" id="delBImg">×</button>
         </div>` : '';
       if($('#delBImg')) $('#delBImg').onclick = () => { curBImg = ''; paintCardImgPreviews(); };
@@ -2846,7 +2845,14 @@ function cForm(card){
         </div>
         <input type="file" id="inp_fimg" accept="image/*" hidden>
       </div>
-      <textarea class="inp" id="k_f" placeholder="คำถาม (กด Enter เพื่อขึ้นบรรทัดใหม่ได้)" style="min-height:110px">${esc(d.f)}</textarea>
+      <textarea class="inp" id="k_f" placeholder="คำถาม (กด Enter เพื่อขึ้นบรรทัดใหม่ได้)" style="min-height:90px">${esc(d.f)}</textarea>
+      <div class="row" style="margin-top:6px;gap:8px;align-items:center">
+        <small style="color:var(--muted)">ตำแหน่งข้อความ:</small>
+        <div class="chips" id="wrap_fpos">
+          <button type="button" class="chip sm ${curFPos==='top'?'on':''}" data-fpos="top">ไว้บนรูป</button>
+          <button type="button" class="chip sm ${curFPos==='bottom'?'on':''}" data-fpos="bottom">ไว้ใต้รูป</button>
+        </div>
+      </div>
       <div id="f_img_preview" style="margin-top:6px"></div>
     </div>
 
@@ -2859,7 +2865,14 @@ function cForm(card){
         </div>
         <input type="file" id="inp_bimg" accept="image/*" hidden>
       </div>
-      <textarea class="inp" id="k_b" placeholder="คำตอบ (กด Enter เพื่อขึ้นบรรทัดใหม่ได้)" style="min-height:110px">${esc(d.b)}</textarea>
+      <textarea class="inp" id="k_b" placeholder="คำตอบ (กด Enter เพื่อขึ้นบรรทัดใหม่ได้)" style="min-height:90px">${esc(d.b)}</textarea>
+      <div class="row" style="margin-top:6px;gap:8px;align-items:center">
+        <small style="color:var(--muted)">ตำแหน่งข้อความ:</small>
+        <div class="chips" id="wrap_bpos">
+          <button type="button" class="chip sm ${curBPos==='top'?'on':''}" data-bpos="top">ไว้บนรูป</button>
+          <button type="button" class="chip sm ${curBPos==='bottom'?'on':''}" data-bpos="bottom">ไว้ใต้รูป</button>
+        </div>
+      </div>
       <div id="b_img_preview" style="margin-top:6px"></div>
     </div>
 
@@ -2874,14 +2887,29 @@ function cForm(card){
   paintCardImgPreviews();
   icons($('#modal'));
 
+  $$('#wrap_fpos .chip').forEach(b => {
+    b.onclick = () => {
+      playTone('tap');
+      curFPos = b.dataset.fpos;
+      $$('#wrap_fpos .chip').forEach(x => x.classList.toggle('on', x === b));
+    };
+  });
+
+  $$('#wrap_bpos .chip').forEach(b => {
+    b.onclick = () => {
+      playTone('tap');
+      curBPos = b.dataset.bpos;
+      $$('#wrap_bpos .chip').forEach(x => x.classList.toggle('on', x === b));
+    };
+  });
+
   $('#btnAddFImg').onclick = () => $('#inp_fimg').click();
   $('#inp_fimg').onchange = async e => {
     const file = e.target.files[0];
     if(!file) return;
     const optImg = await optimizeImage(file, 2048, 0.90);
-    openImageEditor(optImg, async (finalImg) => {
+    openImageEditor(optImg, (finalImg) => {
       curFImg = finalImg;
-      curFPos = await askTextPosition();
       paintCardImgPreviews();
     });
     e.target.value = '';
@@ -2892,9 +2920,8 @@ function cForm(card){
     const file = e.target.files[0];
     if(!file) return;
     const optImg = await optimizeImage(file, 2048, 0.90);
-    openImageEditor(optImg, async (finalImg) => {
+    openImageEditor(optImg, (finalImg) => {
       curBImg = finalImg;
-      curBPos = await askTextPosition();
       paintCardImgPreviews();
     });
     e.target.value = '';
