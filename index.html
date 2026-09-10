@@ -506,7 +506,13 @@ textarea.inp{resize:vertical;min-height:96px;line-height:1.6}
   font-size:15.5px;
 }
 .opt-header{display:flex;gap:14px;align-items:flex-start;width:100%}
-.opt:hover:not(:disabled){border-color:var(--blue);transform:translateX(2px)}
+@media (hover: hover) {
+  .opt:hover:not(:disabled){border-color:var(--blue);transform:translateX(2px)}
+}
+.opt:focus {
+  outline: none;
+}
+
 .opt .k{width:32px;height:32px;border-radius:10px;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:14px;color:var(--muted);flex:none}
 .opt.on{background:var(--blue-2);border-color:var(--blue)} .opt.on .k{background:var(--blue);color:#fff;border-color:transparent}
 .opt.right{background:var(--green-2);border-color:var(--green)} .opt.right .k{background:var(--green);color:#fff;border-color:transparent}
