@@ -5461,6 +5461,23 @@ function showCyberStreakBanner(count = 5) {
   }, 5000);
 }
 
+  // ปรับความสูงบนมือถือแนวตั้ง
+window.addEventListener('DOMContentLoaded', () => {
+  if (window.innerWidth <= 980) {
+    const mainEl = document.querySelector('.main');
+    const appEl = document.querySelector('.app');
+    if (mainEl) {
+      mainEl.style.height = 'auto';
+      mainEl.style.minHeight = '100vh';
+      mainEl.style.overflowY = 'visible';
+    }
+    if (appEl) {
+      appEl.style.height = 'auto';
+      appEl.style.minHeight = '100vh';
+    }
+  }
+});
+
 </script>
 <div id="cyberStreakPopup" class="cyber-streak-popup">
   <img id="cyberStreakImg" src="fire.gif" class="cyber-streak-gif" alt="Streak GIF">
