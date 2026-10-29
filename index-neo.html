@@ -1524,6 +1524,58 @@ html .card-def{color:#f5f5f6}
   .topbar h1{font-size:26px}
   .hero h2{font-size:25px}
 }
+/* ---------- NEO HOME (การ์ดซ้อน + เมนูแคปซูล) ---------- */
+:root{--cf:#6aa6da;--cf-deep:#3b82c4}
+.neo-greet{font-size:32px;line-height:1.15;letter-spacing:-.04em;font-weight:700;margin:4px 0 16px}
+.neo-greet span{color:var(--muted)}
+.neo-chips{margin-bottom:34px}
+.neo-chips .chip{padding:10px 16px;font-size:14px;background:var(--surface);color:var(--text)}
+.neo-chips .chip i{font-style:normal;color:var(--muted);margin-left:2px}
+.neo-chips .chip.on{background:var(--cf-deep);color:#fff}
+.neo-chips .chip.on i{color:rgba(255,255,255,.75)}
+.home-profile-header{padding:0}
+.hp-avatar-wrap{width:52px;height:52px;border-radius:50%!important;box-shadow:0 0 0 3px var(--surface),0 0 0 4px var(--line)!important}
+.hp-name-row b{font-size:16px}
+.hp-track-badge{color:var(--cf-deep);font-weight:600}
+@media(max-width:980px){.topbar .ib{width:52px;height:52px;border-radius:50%}}
+
+.hero{
+  background:linear-gradient(160deg,var(--cf) 0%,var(--cf-deep) 70%);border:0;border-radius:30px;
+  box-shadow:0 -14px 0 -8px #a8c9ea,0 -28px 0 -16px var(--surface3),0 26px 40px -26px rgba(59,130,196,.7);
+}
+[data-theme="dark"] .hero{background:linear-gradient(160deg,var(--cf) 0%,var(--cf-deep) 70%);box-shadow:0 -14px 0 -8px #2c5f8f,0 -28px 0 -16px #1f262d}
+.hero::before,.hero::after{display:none}
+.hero > div:first-child{padding-right:0}
+.hero h2{margin-right:100px}
+.hero p{display:inline-block;background:#fff;color:var(--cf-deep);opacity:1;font-size:12px;font-weight:700;padding:3px 12px;border-radius:999px;margin:0 0 12px}
+.hero h2{font-size:34px;line-height:1.12;color:#fff}
+.hero .cta{flex-wrap:nowrap;align-items:center;margin-top:22px;gap:10px}
+.hero .btn.w{
+  flex:1;justify-content:flex-start;gap:12px;height:56px;padding:6px 18px 6px 6px;border-radius:999px;
+  background:rgba(255,255,255,.22);color:#fff;box-shadow:none;border:0;
+}
+.hero .btn.w svg{flex:none;width:44px;height:44px;padding:13px;border-radius:50%;background:#fff;color:var(--cf-deep);fill:none}
+.hero .btn.w::after{content:"›››";position:static;width:auto;height:auto;background:none;transform:none;margin-left:auto;letter-spacing:2px;opacity:.6;font-size:18px}
+.hero .cta .btn:not(.w){font-size:0;gap:0;width:56px;height:56px;padding:0;border-radius:50%;background:#fff;color:#000;border:0;flex:none}
+.hero .cta .btn:not(.w) svg{width:20px;height:20px}
+.hero .cta .btn:not(.w)::after{display:none}
+html .hero .ringbox{position:absolute!important;top:20px;right:20px;margin:0!important;width:86px!important;height:86px!important}
+.hero .ringbox svg{width:86px;height:86px}
+.ringbox::before{display:none}
+.ringbox .bgc{stroke:rgba(255,255,255,.25)}
+.ringbox .fgc{stroke:#fff!important}
+.ringbox .txt b{font-size:19px}
+.ringbox .txt span{font-size:9.5px;color:rgba(255,255,255,.85)}
+@media (max-width:980px) and (orientation:portrait){html .hero{min-height:0!important;padding:22px!important;border-radius:30px!important}}
+.hero{transform:none!important}
+
+@media(max-width:980px){
+  .bottomnav{left:50%;right:auto;transform:translateX(-50%);width:max-content;max-width:calc(100% - 24px);gap:6px;padding:7px;border-radius:999px;justify-content:center}
+  .bn{flex:0 0 42px;height:42px;padding:0;font-size:0;gap:0;border-radius:50%;background:var(--surface2);justify-content:center}
+  .bn.on{flex:0 0 auto;flex-direction:row;gap:6px;font-size:13px;padding:0 16px;border-radius:999px;background:var(--cf-deep);color:#fff;transform:none}
+  .bn.on svg{color:#fff!important}
+}
+
 /* แป้นพิมพ์มือถือ: ย่อ modal ให้อยู่เหนือแป้นพิมพ์ (ค่าจาก visualViewport) */
 .mask,.rte-mask,.img-editor-mask{top:var(--neo-vvt,0px);bottom:auto;height:var(--neo-vvh,100%)}
 .mask .modal{max-height:calc(var(--neo-vvh,100dvh) - 24px)}
@@ -3023,20 +3075,17 @@ function renderHome(){
   const greetingText = name ? `${hi} ${name}` : `${hi}`;
 
   $('#view').innerHTML=`
-  <div class="banner-slider" id="bannerSlider">
-    <div class="banner-track" id="bannerTrack">
-      ${slides.map(s=>`<div class="banner-slide">${s}</div>`).join('')}
-    </div>
-    ${slides.length > 1 ? `
-      <div class="banner-dots" id="bannerDots">
-        ${slides.map((_,i)=>`<span class="b-dot ${i===0?'on':''}"></span>`).join('')}
-      </div>` : ''}
+  <div class="neo-greet"><b>${esc(greetingText)},</b> <span>พร้อมลุยต่อไหม?</span></div>
+  <div class="chips sc neo-chips">
+    <button class="chip on" data-go="quiz">ข้อสอบ <i>${S.questions.length.toLocaleString()}</i></button>
+    <button class="chip" data-go="cards">บัตรจำถึงรอบ <i>${due}</i></button>
+    <button class="chip" data-go="result">ต่อเนื่อง <i>${streak()} วัน</i></button>
   </div>
 
   <div class="hero" ${heroStyle}>
     <div style="flex:1;position:relative;z-index:1">
-      <h2>${esc(greetingText)}</h2>
-      <p>สาย${esc(trackInfo.name)} · ${esc(trackInfo.short)}</p>
+      <p>สาย${esc(trackInfo.name)}</p>
+      <h2>เป้าหมายวันนี้<br>ทำ ${goal} ข้อ</h2>
       <div class="cta">
         <button class="btn w" data-q="practice"><i data-lucide="play"></i>เริ่มทำ</button>
        <button class="btn" id="btnCloudHub"><i data-lucide="cloud-download"></i>แชร์ออนไลน์</button>
@@ -3064,6 +3113,16 @@ function renderHome(){
       <div><b style="font-size:19px">${hmin(S.stats.minutes)}</b><span>เวลาสะสม</span></div></div>
     <div class="card stat"><div class="ic" style="background:var(--violet-2);color:var(--violet)"><i data-lucide="flame"></i></div>
       <div><b>${streak()}</b><span>วันต่อเนื่อง</span></div></div>
+  </div>
+
+  <div class="banner-slider" id="bannerSlider" style="margin-top:14px">
+    <div class="banner-track" id="bannerTrack">
+      ${slides.map(s=>`<div class="banner-slide">${s}</div>`).join('')}
+    </div>
+    ${slides.length > 1 ? `
+      <div class="banner-dots" id="bannerDots">
+        ${slides.map((_,i)=>`<span class="b-dot ${i===0?'on':''}"></span>`).join('')}
+      </div>` : ''}
   </div>
 
   <div class="mastery-card">
