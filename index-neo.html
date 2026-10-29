@@ -1573,6 +1573,29 @@ html .hero .ringbox{position:absolute!important;top:20px;right:20px;margin:0!imp
 .neo-dcard[data-pos="0"]{z-index:3}
 .neo-dcard[data-pos="1"]{z-index:2;transform:translateY(-16px) scale(.94);opacity:.9;pointer-events:none}
 .neo-dcard[data-pos="2"]{z-index:1;transform:translateY(-32px) scale(.88);opacity:.7;pointer-events:none}
+.neo-dcard[data-pos]:not([data-pos="0"]):not([data-pos="1"]):not([data-pos="2"]){z-index:0;transform:translateY(-32px) scale(.88);opacity:0;pointer-events:none}
+.neo-deck{grid-template-rows:100%}
+body.neo-home .main{padding-bottom:0}
+html .neo-deck .hero{flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important}
+.neo-deck .hero > div:first-child{display:contents}
+.neo-deck .hero p{order:1;align-self:flex-start}
+.neo-deck .hero h2{order:2;margin-right:0;font-size:40px}
+html .neo-deck .hero .ringbox{order:3;position:relative!important;top:auto;right:auto;margin:auto!important;height:min(200px,40%)!important;width:auto!important;aspect-ratio:1;flex:none}
+.neo-deck .hero .ringbox svg{width:100%;height:100%}
+.neo-deck .hero .ringbox .bgc{stroke-width:10}
+.neo-deck .hero .ringbox .fgc{stroke-width:11}
+.neo-deck .hero .ringbox .txt b{font-size:40px}
+.neo-deck .hero .ringbox .txt span{font-size:13px}
+.neo-deck .hero .cta{order:4;margin-top:0}
+.neo-dcard{box-shadow:0 26px 40px -28px rgba(0,0,0,.45)}
+.neo-extra{background:var(--surface);border:1px solid var(--line);border-radius:30px;padding:20px;overflow-y:auto;overscroll-behavior:contain}
+.neo-extra > *{margin:0!important}
+.neo-extra .mastery-card,.neo-extra .resume-card,.neo-extra .week-card{border:0;box-shadow:none;background:transparent;padding:0;margin:0}
+.neo-extra .mastery-card::before,.neo-extra .resume-card::before,.neo-extra .week-card::before{display:none}
+.neo-extra .banner-slider{overflow:visible}
+.neo-extra .banner-track{flex-direction:column;gap:10px;transform:none!important}
+.neo-extra .banner-slide{min-width:0}
+.neo-extra .banner-dots{display:none}
 .neo-stat-card,.neo-prob-card{border-radius:30px;padding:22px;display:flex;flex-direction:column;gap:14px;overflow:hidden}
 .neo-stat-card{background:#000;color:#fbfbf8}
 [data-theme="dark"] .neo-stat-card{background:#1a1f25}
@@ -6827,7 +6850,24 @@ window.triggerUploadPicker = function() {
     const deck=document.querySelector('.neo-deck');
     if(!deck||deck.dataset.ready)return;
     deck.dataset.ready='1';
-    const cards=[...deck.children], dots=[...document.querySelectorAll('.neo-deck-dots i')];
+    // ย้ายทุกส่วนที่อยู่ใต้กองการ์ด เข้ามาเป็นการ์ดในกอง (ย้าย node เดิม ปุ่มยังทำงานเหมือนเดิม)
+    const dotsEl=document.querySelector('.neo-deck-dots');
+    for(let el=dotsEl.nextElementSibling;el;){
+      const nx=el.nextElementSibling;
+      const w=document.createElement('div');w.className='neo-dcard neo-extra';w.appendChild(el);deck.appendChild(w);
+      el=nx;
+    }
+    const cards=[...deck.children];
+    dotsEl.innerHTML=cards.map(()=>'<i></i>').join('');
+    const dots=[...dotsEl.children];
+    // ขยายกองการ์ดให้พอดีพื้นที่ที่เหลือบนจอ (ไม่ต้องเลื่อนหน้า)
+    const fit=()=>{
+      if(!deck.isConnected)return window.removeEventListener('resize',fit);
+      const nav=document.querySelector('.bottomnav');
+      const navH=nav&&getComputedStyle(nav).display!=='none'?nav.offsetHeight+16:0;
+      deck.style.height=Math.max(340,innerHeight-deck.getBoundingClientRect().top-navH-40)+'px';
+    };
+    fit();setTimeout(fit,700);window.addEventListener('resize',fit);
     let order=cards.map((_,i)=>i), sx=0, sy=0, dx=0, drag=false, lock=null, swiped=false;
     const paint=()=>{
       order.forEach((ci,pos)=>{cards[ci].dataset.pos=pos;cards[ci].style.transform='';});
@@ -6875,7 +6915,7 @@ window.triggerUploadPicker = function() {
     deck.addEventListener('click',e=>{if(swiped){swiped=false;e.stopPropagation();e.preventDefault();}},true);
     paint();
   };
-  if(view)new MutationObserver(initDeck).observe(view,{childList:true});
+  if(view)new MutationObserver(()=>{document.body.classList.toggle('neo-home',!!view.querySelector('.neo-deck'));initDeck();}).observe(view,{childList:true});
   initDeck();
 
   // เอียง 3D การ์ด hero ตามเมาส์ (เฉพาะจอที่มีเมาส์)
