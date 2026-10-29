@@ -2,7 +2,7 @@
 <html lang="th" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="theme-color" content="#0b0b0d">
+<meta name="theme-color" content="#000000">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Police Prep NEO · ติวสอบตำรวจ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1166,34 +1166,34 @@ textarea.inp{resize:vertical;min-height:96px;line-height:1.6}
    ทับเฉพาะหน้าตา ไม่แตะตรรกะของระบบ
    ========================================================= */
 :root{
-  --bg:#f2f2ee; --surface:#ffffff; --surface2:#f7f7f3; --surface3:#ebebe5;
-  --text:#0b0b0d; --text2:#3b3b42; --muted:#80808a; --line:#e2e2db;
-  --navy:#0b0b0d; --blue:#4f46e5; --blue-2:#ecebff;
+  --bg:#fbfbf8; --surface:#ffffff; --surface2:#f3f6f8; --surface3:#dbe3e9;
+  --text:#000000; --text2:#3a4048; --muted:#7d8791; --line:#e2e8ed;
+  --navy:#000000; --blue:#6aa6da; --blue-2:#e6f0f9;
   --green:#16a34a; --green-2:#e3f8e9;
   --orange:#ea7a00; --orange-2:#fff1df;
   --red:#ef3e4a; --red-2:#ffe8ea;
   --violet:#8b5cf6; --violet-2:#f1ebff;
   --cyan:#0891b2; --cyan-2:#e0f6fb;
-  --primary:#0b0b0d; --onp:#d6ff3d;
-  --acc:#d6ff3d; --acc-ink:#0b0b0d; --acc-glow:rgba(170,230,0,.45);
+  --primary:#000000; --onp:#e1e5ac;
+  --acc:#e1e5ac; --acc-ink:#000000; --acc-glow:rgba(106,166,218,.35);
   --r:20px; --r2:16px; --r3:12px;
   --sh1:0 1px 0 rgba(11,11,13,.04);
   --sh2:0 24px 48px -24px rgba(11,11,13,.35);
-  --grid-line:rgba(11,11,13,.045);
+  --grid-line:rgba(106,166,218,.10);
   --ease:cubic-bezier(.2,.9,.2,1);
   --spring:cubic-bezier(.34,1.56,.64,1);
 }
 [data-theme="dark"]{
-  --bg:#08080a; --surface:#111114; --surface2:#17171b; --surface3:#202026;
-  --text:#f5f5f6; --text2:#c7c7cf; --muted:#8b8b96; --line:#24242b;
-  --navy:#f5f5f6; --blue:#8b8bff; --blue-2:#1b1b33;
+  --bg:#000000; --surface:#0e1013; --surface2:#151a1f; --surface3:#1f262d;
+  --text:#fbfbf8; --text2:#dbe3e9; --muted:#8a96a1; --line:#232a31;
+  --navy:#fbfbf8; --blue:#6aa6da; --blue-2:#132433;
   --green:#3ee07f; --green-2:#0f2a1a;
   --orange:#ffb340; --orange-2:#2c2010;
   --red:#ff5c68; --red-2:#2f1418;
   --violet:#b69bff; --violet-2:#221a3a;
   --cyan:#3fd8ee; --cyan-2:#0b2a30;
-  --primary:#d6ff3d; --onp:#0b0b0d;
-  --acc:#d6ff3d; --acc-ink:#0b0b0d; --acc-glow:rgba(214,255,61,.35);
+  --primary:#e1e5ac; --onp:#000000;
+  --acc:#e1e5ac; --acc-ink:#000000; --acc-glow:rgba(106,166,218,.30);
   --sh1:0 1px 0 rgba(255,255,255,.03);
   --sh2:0 30px 60px -30px rgba(0,0,0,.8);
   --grid-line:rgba(255,255,255,.035);
@@ -1295,7 +1295,7 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.03em}
 [data-theme="dark"] .resume-card::before,[data-theme="dark"] .setcard::before,[data-theme="dark"] .quick::before,
 [data-theme="dark"] .qrow::before,[data-theme="dark"] .mastery-item-v2::before,[data-theme="dark"] .course-card::before{
   mix-blend-mode:normal;
-  background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),rgba(214,255,61,.09),transparent 60%);
+  background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),rgba(225,229,172,.09),transparent 60%);
 }
 .neo-lit::before{opacity:1!important}
 @media(hover:hover){
@@ -1362,7 +1362,7 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.03em}
 /* ---------- progress ---------- */
 .bar,.m-bar,.m-bar-v2,.course-progress-track{background:var(--surface3)}
 .bar i{background:linear-gradient(90deg,var(--text),var(--blue))}
-[data-theme="dark"] .bar i{background:linear-gradient(90deg,var(--acc),#66f0b0)}
+[data-theme="dark"] .bar i{background:linear-gradient(90deg,var(--acc),#6aa6da)}
 .b-dot{background:var(--surface3);transition:all .35s var(--spring)}
 .b-dot.on{background:var(--text);width:22px}
 
@@ -1374,15 +1374,15 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.03em}
 
 /* ---------- HERO ---------- */
 .hero{
-  background:#0b0b0d;color:#f5f5f6;border-radius:28px;padding:28px;
+  background:#000000;color:#f5f5f6;border-radius:28px;padding:28px;
   border:1px solid rgba(255,255,255,.08);box-shadow:var(--sh2);isolation:isolate;
 }
 [data-theme="dark"] .hero{background:#121216}
 .hero::before{
   content:"";position:absolute;inset:-1px;border-radius:inherit;z-index:-1;pointer-events:none;
   background:
-    radial-gradient(500px 220px at 85% 10%,rgba(214,255,61,.22),transparent 60%),
-    radial-gradient(400px 260px at 0% 120%,rgba(139,92,246,.30),transparent 60%);
+    radial-gradient(500px 220px at 85% 10%,rgba(225,229,172,.22),transparent 60%),
+    radial-gradient(400px 260px at 0% 120%,rgba(106,166,218,.30),transparent 60%);
 }
 .hero::after{
   content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;pointer-events:none;opacity:.5;
@@ -1394,9 +1394,9 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.03em}
 .hero p{opacity:.6;font-size:13px;margin-top:6px;font-weight:500}
 .hero .btn{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.12)}
 .hero .btn:hover{background:rgba(255,255,255,.14)}
-.hero .btn.w{background:var(--acc);color:var(--acc-ink);border-color:transparent;box-shadow:0 10px 30px -10px rgba(214,255,61,.7)}
+.hero .btn.w{background:var(--acc);color:var(--acc-ink);border-color:transparent;box-shadow:0 10px 30px -10px rgba(225,229,172,.7)}
 .ringbox .bgc{stroke:rgba(255,255,255,.08);stroke-width:8}
-.ringbox .fgc{stroke:#d6ff3d!important;stroke-width:9;filter:drop-shadow(0 0 6px rgba(214,255,61,.75))}
+.ringbox .fgc{stroke:#e1e5ac!important;stroke-width:9;filter:drop-shadow(0 0 6px rgba(225,229,172,.75))}
 .ringbox .txt b{font-size:30px;letter-spacing:-.05em;font-weight:700}
 .ringbox .txt span{color:rgba(255,255,255,.55);font-size:11px;letter-spacing:.06em}
 .ringbox::before{
@@ -1481,8 +1481,8 @@ html .front .hint{color:var(--muted)!important}
 html .card-word{color:var(--text);font-weight:700;letter-spacing:-.03em;font-size:28px}
 html .btn-tts{background:var(--surface2);color:var(--text)}
 html .back{
-  background:#0b0b0d!important;color:#f5f5f6!important;border:1px solid rgba(255,255,255,.08)!important;
-  box-shadow:0 30px 60px -30px rgba(0,0,0,.8),inset 0 0 120px rgba(214,255,61,.08)!important;
+  background:#000000!important;color:#f5f5f6!important;border:1px solid rgba(255,255,255,.08)!important;
+  box-shadow:0 30px 60px -30px rgba(0,0,0,.8),inset 0 0 120px rgba(225,229,172,.08)!important;
 }
 html .back .tag{background:var(--acc)!important;color:var(--acc-ink)!important}
 html .card-def{color:#f5f5f6}
