@@ -7110,7 +7110,7 @@ window.triggerUploadPicker = function() {
       if(!drag)return;
       drag=false;
       const top=cards[order[0]];
-      if(lock==='x'&&Math.abs(dx)>70){swiped=true;dx<0?next(-1):prev();}
+      if(lock==='x'&&Math.abs(dx)>70){swiped=true;setTimeout(()=>swiped=false,350);dx<0?next(-1):prev();}
       else{top.style.transition='';top.style.transform='';}
     };
     deck.addEventListener('pointerup',end);
