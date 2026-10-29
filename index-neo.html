@@ -1569,12 +1569,19 @@ html .hero .ringbox{position:absolute!important;top:20px;right:20px;margin:0!imp
 @media (max-width:980px) and (orientation:portrait){html .hero{min-height:0!important;padding:22px!important;border-radius:30px!important}}
 /* กองการ์ดปัดได้ */
 .neo-deck{display:grid;margin-top:8px;touch-action:pan-y;user-select:none;-webkit-user-select:none}
-.neo-deck > .neo-dcard{grid-area:1/1;transition:transform .45s var(--ease),opacity .45s;margin:0}
+.neo-deck > .neo-dcard{grid-area:1/1;transform-origin:50% 0;transition:transform .45s var(--ease),opacity .45s;margin:0}
 .neo-dcard[data-pos="0"]{z-index:3}
 .neo-dcard[data-pos="1"]{z-index:2;transform:translateY(-16px) scale(.94);opacity:.9;pointer-events:none}
 .neo-dcard[data-pos="2"]{z-index:1;transform:translateY(-32px) scale(.88);opacity:.7;pointer-events:none}
 .neo-dcard[data-pos]:not([data-pos="0"]):not([data-pos="1"]):not([data-pos="2"]){z-index:0;transform:translateY(-32px) scale(.88);opacity:0;pointer-events:none}
 .neo-deck{grid-template-rows:100%}
+/* ให้ทุกส่วนในกองการ์ดส่งการปัดแนวนอนมาที่สคริปต์ (การ์ดที่เลื่อนได้จะไม่แย่งการปัด) */
+.neo-deck,.neo-deck *{touch-action:pan-y}
+.neo-dcard:not([data-pos="0"]) > *{visibility:hidden}
+.neo-dcard[data-pos="1"],.neo-dcard[data-pos="2"]{opacity:1}
+/* เอาแถวชิปออก การ์ดจะยืดลงมาแทน */
+.neo-chips{display:none}
+.neo-greet{margin-bottom:34px}
 body.neo-home .main{padding-bottom:0}
 html .neo-deck .hero{flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important}
 .neo-deck .hero > div:first-child{display:contents}
