@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="theme-color" content="#000000">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, interactive-widget=resizes-content">
 <title>Police Prep NEO · ติวสอบตำรวจ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1524,6 +1524,10 @@ html .card-def{color:#f5f5f6}
   .topbar h1{font-size:26px}
   .hero h2{font-size:25px}
 }
+/* แป้นพิมพ์มือถือ: ย่อ modal ให้อยู่เหนือแป้นพิมพ์ (ค่าจาก visualViewport) */
+.mask,.rte-mask,.img-editor-mask{top:var(--neo-vvt,0px);bottom:auto;height:var(--neo-vvh,100%)}
+.mask .modal{max-height:calc(var(--neo-vvh,100dvh) - 24px)}
+.rte-mask .rte-modal{height:min(88dvh,calc(var(--neo-vvh,100dvh) - 24px))}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
 }
@@ -6712,6 +6716,18 @@ window.triggerUploadPicker = function() {
     if(!document.body.classList.contains('neo-enter'))return;
     view.querySelectorAll('.stat b,#ringTxt,.mini b,.sring .txt b').forEach(countUp);
   }).observe(view,{childList:true});
+
+  // แป้นพิมพ์บังช่องกรอก: ติดตามพื้นที่ที่มองเห็นจริง แล้วเลื่อนช่องที่กดมาไว้กลางจอ
+  const vv=window.visualViewport, rs=document.documentElement.style;
+  const fit=()=>{if(!vv)return;rs.setProperty('--neo-vvh',vv.height+'px');rs.setProperty('--neo-vvt',vv.offsetTop+'px');};
+  if(vv){vv.addEventListener('resize',fit);vv.addEventListener('scroll',fit);fit();}
+  const show=f=>f&&f.isConnected&&f.scrollIntoView({block:'center',behavior:'smooth'});
+  document.addEventListener('focusin',e=>{
+    const f=e.target;
+    if(!f.matches||!f.matches('input:not([type=range]):not([type=file]),textarea,select,[contenteditable="true"]'))return;
+    setTimeout(()=>show(f),350);setTimeout(()=>show(f),800);
+  });
+  if(vv)vv.addEventListener('resize',()=>{const f=document.activeElement;if(f&&f.matches&&f.matches('input,textarea,[contenteditable="true"]'))show(f);});
 
   // เอียง 3D การ์ด hero ตามเมาส์ (เฉพาะจอที่มีเมาส์)
   if(matchMedia('(hover:hover)').matches&&!reduce){
