@@ -1218,7 +1218,7 @@ body::before{
 body::after{
   content:"";position:fixed;width:520px;height:520px;border-radius:50%;pointer-events:none;z-index:0;
   top:-220px;right:-160px;background:radial-gradient(circle,var(--acc-glow),transparent 65%);
-  filter:blur(20px);opacity:.55;animation:neoFloat 14s ease-in-out infinite alternate;
+  opacity:.55;animation:neoFloat 14s ease-in-out infinite alternate;
 }
 @keyframes neoFloat{to{transform:translate(-120px,140px) scale(1.15)}}
 .app{position:relative;z-index:1}
@@ -1318,7 +1318,7 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.03em}
   border-radius:14px;font-weight:700;letter-spacing:-.01em;position:relative;overflow:hidden;
   transition:transform .2s var(--spring),box-shadow .25s,filter .2s;
 }
-.btn:hover{box-shadow:0 10px 22px -12px currentColor}
+@media(hover:hover){.btn:hover{box-shadow:0 10px 22px -12px currentColor}}
 .btn:active,.ib:active,.chip:active,.quick:active,.bn:active,.nav:active,.opt:active,.pal:active{transform:scale(.95)!important}
 .btn:not(.ghost)::after{
   content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;pointer-events:none;
@@ -1337,6 +1337,8 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.03em}
 .fab:hover{transform:translateY(-3px) rotate(-2deg)}
 
 /* ripple */
+.neo-rip-wrap{position:absolute;inset:0;overflow:hidden;border-radius:inherit;pointer-events:none}
+.chips > *{flex-shrink:0}
 .neo-ripple{
   position:absolute;border-radius:50%;pointer-events:none;transform:scale(0);
   background:currentColor;opacity:.22;animation:neoRipple .6s var(--ease) forwards;
@@ -1396,7 +1398,7 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.03em}
 .hero .btn:hover{background:rgba(255,255,255,.14)}
 .hero .btn.w{background:var(--acc);color:var(--acc-ink);border-color:transparent;box-shadow:0 10px 30px -10px rgba(225,229,172,.7)}
 .ringbox .bgc{stroke:rgba(255,255,255,.08);stroke-width:8}
-.ringbox .fgc{stroke:#e1e5ac!important;stroke-width:9;filter:drop-shadow(0 0 6px rgba(225,229,172,.75))}
+.ringbox .fgc{stroke:#e1e5ac!important;stroke-width:9}
 .ringbox .txt b{font-size:30px;letter-spacing:-.05em;font-weight:700}
 .ringbox .txt span{color:rgba(255,255,255,.55);font-size:11px;letter-spacing:.06em}
 .ringbox::before{
@@ -1464,7 +1466,6 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:-.03em}
 
 /* ---------- result ---------- */
 .sring .txt b{font-size:48px;letter-spacing:-.06em;font-weight:700}
-.sring .fgc{filter:drop-shadow(0 0 8px currentColor)}
 .mini{border-radius:16px;border:1px solid var(--line);background:var(--surface)}
 .mini b{font-size:22px;letter-spacing:-.03em}
 .pass-badge{border-radius:999px}
@@ -1513,7 +1514,7 @@ html .card-def{color:#f5f5f6}
 .neo-enter #view > *:nth-child(5){animation-delay:.2s}
 .neo-enter #view > *:nth-child(n+6){animation-delay:.25s}
 .neo-enter .topbar{animation:neoIn .5s var(--ease) both}
-@keyframes neoIn{from{opacity:0;transform:translateY(14px);filter:blur(4px)}}
+@keyframes neoIn{from{opacity:0;transform:translateY(14px)}}
 
 @media (max-width:980px) and (orientation:portrait){
   html .hero{min-height:0!important;padding:24px 22px!important;border-radius:26px!important}
@@ -6670,12 +6671,13 @@ window.triggerUploadPicker = function() {
     const r=el.getBoundingClientRect(), s=Math.max(r.width,r.height)*2.2;
     const cs=getComputedStyle(el);
     if(cs.position==='static')el.style.position='relative';
-    if(cs.overflow!=='hidden')el.style.overflow='hidden';
+    const w=document.createElement('span');
+    w.className='neo-rip-wrap';
     const d=document.createElement('span');
     d.className='neo-ripple';
     d.style.cssText=`width:${s}px;height:${s}px;left:${e.clientX-r.left-s/2}px;top:${e.clientY-r.top-s/2}px`;
-    el.appendChild(d);
-    setTimeout(()=>d.remove(),650);
+    w.appendChild(d);el.appendChild(w);
+    setTimeout(()=>w.remove(),650);
   },{passive:true});
 
   // แอนิเมชันตอนเปลี่ยนหน้า (เฉพาะตอนกดเมนู ไม่เล่นซ้ำทุกครั้งที่หน้า re-render)
